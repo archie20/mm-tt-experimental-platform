@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teacher Training Experimental Platform</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f7f6;
+                color: #333;
+                margin: 0;
+                padding: 40px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                background-color: #fff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                max-width: 700px;
+                width: 100%;
+                text-align: center;
+            }
+
+            h2,
+            h3 {
+                color: #2c3e50;
+            }
+
+            h3 {
+                text-align: left;
+                border-bottom: 2px solid #ecf0f1;
+                padding-bottom: 8px;
+                margin-top: 25px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+                text-align: left;
+            }
+
+            .quiz-question {
+                text-align: left;
+                margin-bottom: 20px;
+                background: #fafbfc;
+                padding: 15px;
+                border-radius: 6px;
+                border-left: 4px solid #3498db;
+            }
+
+            .quiz-question p {
+                margin-top: 0;
+                font-weight: bold;
+            }
+
+            .options label {
+                display: block;
+                margin: 8px 0;
+                cursor: pointer;
+                font-weight: normal;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            input[type="text"],
+            select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            button {
+                background-color: #3498db;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            button:hover {
+                background-color: #2980b9;
+            }
+
+            video {
+                width: 100%;
+                max-height: 400px;
+                margin-top: 20px;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                display: none;
+            }
+
+            #statusMessage {
+                margin-top: 15px;
+                font-weight: bold;
+                color: #27ae60;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h2>Teacher Training Multimedia Module</h2>
+
+            <div id="setupForm">
+                <div class="form-group">
+                    <label for="participantId">Participant ID:</label>
+                    <input type="text" id="participantId" placeholder="e.g., T-101" required>
+                </div>
+                <div class="form-group">
+                    <label for="groupNumber">Assigned Group Module (1-8):</label>
+                    <select id="groupNumber">
+                        <option value="1">Group 1: Full Redundancy (Animated)</option>
+                        <option value="2">Group 2: Full Redundancy (Static)</option>
+                        <option value="3">Group 3: Optimized Modality (Animated)</option>
+                        <option value="4">Group 4: Narration Only (Static)</option>
+                        <option value="5">Group 5: Visual Only (Animated Text)</option>
+                        <option value="6">Group 6: Visual Only (Static Text)</option>
+                        <option value="7">Group 7: Minimal Word (Animated)</option>
+                        <option value="8">Group 8: Minimal Word (Static)</option>
+                    </select>
+                </div>
+                <button type="button" onclick="startExperiment()">Access Training Module</button>
+            </div>
+
+            <video id="experimentVideo" controls controlsList="nodownload"></video>
+
+            <div id="assessmentArea" style="display:none;">
+                <h2>Post-Module Evaluation</h2>
+                <p>Please complete this quick check regarding the CPA instructional approach.</p>
+
+                <form id="quizForm">
+                    <h3>Section A: Literal Recall (Retention)</h3>
+                    <div class="quiz-question">
+                        <p>1. In the concrete modeling stage shown in the video, what structural objects were used to
+                            represent the variable 'x' and constants?</p>
+                        <div class="options">
+                            <label><input type="radio" name="q1" value="correct"> Mystery boxes and marbles on a balance
+                                scale</label>
+                            <label><input type="radio" name="q1" value="wrong1"> Measurement blocks and rulers on a flat
+                                grid</label>
+                            <label><input type="radio" name="q1" value="wrong2"> Written symbols on a standard
+                                chalkboard</label>
+                        </div>
+                    </div>
+                    <div class="quiz-question">
+                        <p>2. What was the exact sequence of instructions explicitly illustrated in the module's
+                            pedagogy?</p>
+                        <div class="options">
+                            <label><input type="radio" name="q2" value="wrong1"> Abstract Equation, then Pictorial
+                                drawing, then Concrete blocks</label>
+                            <label><input type="radio" name="q2" value="correct"> Concrete handling, then Pictorial
+                                representation, then Abstract equation parsing</label>
+                            <label><input type="radio" name="q2" value="wrong2"> Rote memorization of procedural
+                                formulas directly</label>
+                        </div>
+                    </div>
+
+                    <h3>Section B: Scenario-Based Far-Transfer</h3>
+                    <div class="quiz-question">
+                        <p>3. If you are configuring a new lesson template for the equation 3x + 2 = 11 using the
+                            Pictorial stage, how should you direct students to sketch the balance setup?</p>
+                        <div class="options">
+                            <label><input type="radio" name="q3" value="wrong1"> Draw 11 large boxes containing 3
+                                smaller marbles each</label>
+                            <label><input type="radio" name="q3" value="correct"> Sketch 3 identical structural squares
+                                and 2 circles balancing 11 circles</label>
+                            <label><input type="radio" name="q3" value="wrong2"> Write out the integers 3, 2, and 11
+                                side-by-side using numerical values</label>
+                        </div>
+                    </div>
+                    <div class="quiz-question">
+                        <p>4. A secondary student easily handles physical blocks (Concrete) but fails when attempting to
+                            solve written expressions (Abstract). Based on the framework, which remedial bridging
+                            intervention is most critical?</p>
+                        <div class="options">
+                            <label><input type="radio" name="q4" value="correct"> Introduce intermediary semi-concrete
+                                sketches (Pictorial representations)</label>
+                            <label><input type="radio" name="q4" value="wrong1"> Increase repetition and drill practice
+                                on the abstract equations</label>
+                            <label><input type="radio" name="q4" value="wrong2"> Provide a calculator to skip ahead past
+                                structural tracking entirely</label>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="gradeAndSubmit()">Submit Assessment & Experimental Metrics</button>
+                </form>
+            </div>
+
+            <div id="statusMessage"></div>
+        </div>
+
+        <script>
+            const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";
+
+            const videoMapping = {
+                1: "videos/group1_redundant_animated.mp4",
+                2: "videos/group2_redundant_static.mp4",
+                3: "videos/group3_optimized_animated.mp4",
+                4: "videos/group4_narration_static.mp4",
+                5: "videos/group5_visual_animated.mp4",
+                6: "videos/group6_visual_static.mp4",
+                7: "videos/group7_minimal_animated.mp4",
+                8: "videos/group8_minimal_static.mp4"
+            };
+
+            let metrics = {
+                participantId: "",
+                groupNumber: "",
+                playCount: 0,
+                pauseCount: 0,
+                rewindCount: 0,
+                startTime: 0,
+                totalTimeOnTask: 0,
+                previousTime: 0,
+                maxTimeWatched: 0,
+                watchedPercentage: 0,
+                recallScore: 0,
+                transferScore: 0
+            };
+
+            const videoNode = document.getElementById("experimentVideo");
+
+            function startExperiment() {
+                metrics.participantId = document.getElementById("participantId").value.trim();
+                metrics.groupNumber = document.getElementById("groupNumber").value;
+
+                if (!metrics.participantId) {
+                    alert("Please enter a valid Participant ID.");
+                    return;
+                }
+
+                document.getElementById("setupForm").style.display = "none";
+                videoNode.style.display = "block";
+                videoNode.src = videoMapping[metrics.groupNumber];
+
+                metrics.startTime = performance.now();
+                document.getElementById("statusMessage").innerText = "Video ready. Please press play to begin.";
+            }
+
+            videoNode.addEventListener('play', () => { metrics.playCount++; });
+            videoNode.addEventListener('pause', () => { if (!videoNode.ended) metrics.pauseCount++; });
+            videoNode.addEventListener('timeupdate', () => {
+                if (videoNode.currentTime > metrics.maxTimeWatched) metrics.maxTimeWatched = videoNode.currentTime;
+                metrics.previousTime = videoNode.currentTime;
+            });
+            videoNode.addEventListener('seeking', () => {
+                if (videoNode.currentTime < metrics.previousTime) metrics.rewindCount++;
+            });
+
+            videoNode.addEventListener('ended', () => {
+                videoNode.style.display = "none";
+                document.getElementById("assessmentArea").style.display = "block";
+                document.getElementById("statusMessage").innerText = "Video completed. Please complete the assessment below.";
+            });
+
+            function gradeAndSubmit() {
+                const form = document.getElementById("quizForm");
+
+                // Grade Section A (Recall) - Questions 1 and 2
+                let recall = 0;
+                if (form.elements['q1'] && form.elements['q1'].value === 'correct') recall++;
+                if (form.elements['q2'] && form.elements['q2'].value === 'correct') recall++;
+                metrics.recallScore = recall;
+
+                // Grade Section B (Transfer) - Questions 3 and 4
+                let transfer = 0;
+                if (form.elements['q3'] && form.elements['q3'].value === 'correct') transfer++;
+                if (form.elements['q4'] && form.elements['q4'].value === 'correct') transfer++;
+                metrics.transferScore = transfer;
+
+                // Finalize timing
+                const endTime = performance.now();
+                metrics.totalTimeOnTask = ((endTime - metrics.startTime) / 1000).toFixed(2);
+                if (videoNode.duration) {
+                    metrics.watchedPercentage = Math.round((metrics.maxTimeWatched / videoNode.duration) * 100);
+                }
+
+                document.getElementById("statusMessage").innerText = "Synchronizing comprehensive metrics with database...";
+
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(metrics)
+                })
+                    .then(() => {
+                        document.getElementById("statusMessage").innerText = "Data submitted successfully. Thank you for your participation.";
+                        document.getElementById("assessmentArea").style.display = "none";
+                    })
+                    .catch(err => {
+                        console.error("Transmission error:", err);
+                        document.getElementById("statusMessage").innerText = "An error occurred. Please cross-verify setup constraints.";
+                    });
+            }
+        </script>
+
+    </body>
+
+</html>
