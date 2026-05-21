@@ -71,13 +71,131 @@
                 font-weight: bold;
             }
 
-            input[type="text"],
-            select {
+            .field-hint {
+                margin: 6px 0 0;
+                font-size: 12px;
+                color: #5f6b77;
+            }
+
+            input[type="text"] {
                 width: 100%;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 box-sizing: border-box;
+            }
+
+            .group-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-top: 6px;
+            }
+
+            .group-card {
+                border: 2px solid #dce1e7;
+                border-radius: 8px;
+                padding: 12px 10px;
+                cursor: pointer;
+                background: #f8f9fa;
+                transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+                text-align: left;
+                user-select: none;
+            }
+
+            .group-card:hover {
+                border-color: #ff7a00;
+                background: #fff4ea;
+            }
+
+            .group-card.selected {
+                border-color: #ff4d6d;
+                background: #ffe6ee;
+                box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.25);
+            }
+
+            .group-card .group-number {
+                font-size: 11px;
+                font-weight: 700;
+                color: #7f8c8d;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 3px;
+            }
+
+            .group-card .group-name {
+                font-size: 13.5px;
+                font-weight: 600;
+                color: #2c3e50;
+                line-height: 1.3;
+            }
+
+            .group-card .group-tag {
+                display: inline-block;
+                margin-top: 5px;
+                font-size: 11px;
+                padding: 2px 7px;
+                border-radius: 20px;
+                font-weight: 600;
+            }
+
+            .group-card .tag-animated {
+                background: #ffe1a8;
+                color: #8a4d00;
+            }
+
+            .group-card .tag-static {
+                background: #c7f0ff;
+                color: #005f7f;
+            }
+
+            .instructions-banner {
+                margin: 6px 0 14px;
+                padding: 12px;
+                border: 2px solid #ffb703;
+                border-radius: 8px;
+                background: #fff4cc;
+            }
+
+            .instructions-title {
+                margin: 0 0 8px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #8b2e00;
+            }
+
+            .instructions-steps {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                display: grid;
+                gap: 6px;
+            }
+
+            .instructions-step {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: #ffffff;
+                border: 1px solid #ffd166;
+                border-radius: 6px;
+                padding: 8px 10px;
+                color: #3a3a3a;
+                font-size: 13px;
+            }
+
+            .instructions-number {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #ff4d6d;
+                color: #ffffff;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                font-weight: 700;
+                flex-shrink: 0;
             }
 
             button {
@@ -132,19 +250,74 @@
                 <div class="form-group">
                     <label for="participantId">Participant ID:</label>
                     <input type="text" id="participantId" placeholder="e.g., T-101" required>
+                    <p class="field-hint">Use your phone number or any random number you can easily remember.</p>
                 </div>
                 <div class="form-group">
-                    <label for="groupNumber">Assigned Group Module (1-8):</label>
-                    <select id="groupNumber">
-                        <option value="1">Group 1: Full Redundancy (Animated)</option>
-                        <option value="2">Group 2: Full Redundancy (Static)</option>
-                        <option value="3">Group 3: Optimized Modality (Animated)</option>
-                        <option value="4">Group 4: Narration Only (Static)</option>
-                        <option value="5">Group 5: Visual Only (Animated Text)</option>
-                        <option value="6">Group 6: Visual Only (Static Text)</option>
-                        <option value="7">Group 7: Minimal Word (Animated)</option>
-                        <option value="8">Group 8: Minimal Word (Static)</option>
-                    </select>
+                    <label>Assigned Group Module (1–8):</label>
+                    <div class="instructions-banner">
+                        <p class="instructions-title">Before you begin</p>
+                        <ol class="instructions-steps">
+                            <li class="instructions-step">
+                                <span class="instructions-number">1</span>
+                                <span>Select <strong>one</strong> group card below.</span>
+                            </li>
+                            <li class="instructions-step">
+                                <span class="instructions-number">2</span>
+                                <span>Click the <strong>Access Training Module</strong> button below.</span>
+                            </li>
+                            <li class="instructions-step">
+                                <span class="instructions-number">3</span>
+                                <span>Watch the full training video.</span>
+                            </li>
+                            <li class="instructions-step">
+                                <span class="instructions-number">4</span>
+                                <span>Answer all <strong>4 questions</strong> after the video ends.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="group-grid" id="groupGrid">
+                        <div class="group-card" data-value="1" onclick="selectGroup(this)">
+                            <div class="group-number">Group 1</div>
+                            <div class="group-name">Full Redundancy</div>
+                            <span class="group-tag tag-animated">Animated</span>
+                        </div>
+                        <div class="group-card" data-value="2" onclick="selectGroup(this)">
+                            <div class="group-number">Group 2</div>
+                            <div class="group-name">Full Redundancy</div>
+                            <span class="group-tag tag-static">Static</span>
+                        </div>
+                        <div class="group-card" data-value="3" onclick="selectGroup(this)">
+                            <div class="group-number">Group 3</div>
+                            <div class="group-name">Optimized Modality</div>
+                            <span class="group-tag tag-animated">Animated</span>
+                        </div>
+                        <div class="group-card" data-value="4" onclick="selectGroup(this)">
+                            <div class="group-number">Group 4</div>
+                            <div class="group-name">Narration Only</div>
+                            <span class="group-tag tag-static">Static</span>
+                        </div>
+                        <div class="group-card" data-value="5" onclick="selectGroup(this)">
+                            <div class="group-number">Group 5</div>
+                            <div class="group-name">Visual Only</div>
+                            <span class="group-tag tag-animated">Animated Text</span>
+                        </div>
+                        <div class="group-card" data-value="6" onclick="selectGroup(this)">
+                            <div class="group-number">Group 6</div>
+                            <div class="group-name">Visual Only</div>
+                            <span class="group-tag tag-static">Static Text</span>
+                        </div>
+                        <div class="group-card" data-value="7" onclick="selectGroup(this)">
+                            <div class="group-number">Group 7</div>
+                            <div class="group-name">Minimal Word</div>
+                            <span class="group-tag tag-animated">Animated</span>
+                        </div>
+                        <div class="group-card" data-value="8" onclick="selectGroup(this)">
+                            <div class="group-number">Group 8</div>
+                            <div class="group-name">Minimal Word</div>
+                            <span class="group-tag tag-static">Static</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="groupNumber" value="">
                 </div>
                 <button type="button" onclick="startExperiment()">Access Training Module</button>
             </div>
@@ -247,12 +420,23 @@
 
             const videoNode = document.getElementById("experimentVideo");
 
+            function selectGroup(card) {
+                document.querySelectorAll('.group-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                document.getElementById('groupNumber').value = card.dataset.value;
+            }
+
             function startExperiment() {
                 metrics.participantId = document.getElementById("participantId").value.trim();
                 metrics.groupNumber = document.getElementById("groupNumber").value;
 
                 if (!metrics.participantId) {
                     alert("Please enter a valid Participant ID.");
+                    return;
+                }
+
+                if (!metrics.groupNumber) {
+                    alert("Please select a group module.");
                     return;
                 }
 
