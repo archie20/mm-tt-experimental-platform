@@ -97,6 +97,15 @@
                 background-color: #2980b9;
             }
 
+            button:disabled {
+                background-color: #95a5a6;
+                cursor: not-allowed;
+            }
+
+            button:disabled:hover {
+                background-color: #95a5a6;
+            }
+
             video {
                 width: 100%;
                 max-height: 400px;
@@ -200,7 +209,7 @@
                         </div>
                     </div>
 
-                    <button type="button" onclick="gradeAndSubmit()">Submit Assessment & Experimental Metrics</button>
+                    <button type="button" id="submitAssessmentBtn" onclick="gradeAndSubmit()">Submit Assessment & Experimental Metrics</button>
                 </form>
             </div>
 
@@ -272,6 +281,10 @@
             });
 
             function gradeAndSubmit() {
+                const submitBtn = document.getElementById("submitAssessmentBtn");
+                if (submitBtn.disabled) return;
+                submitBtn.disabled = true;
+
                 const form = document.getElementById("quizForm");
 
                 // Grade Section A (Recall) - Questions 1 and 2
@@ -308,6 +321,7 @@
                     .catch(err => {
                         console.error("Transmission error:", err);
                         document.getElementById("statusMessage").innerText = "An error occurred. Please cross-verify setup constraints.";
+                        submitBtn.disabled = false;
                     });
             }
         </script>
