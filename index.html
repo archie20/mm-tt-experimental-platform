@@ -426,6 +426,23 @@
                 document.getElementById('groupNumber').value = card.dataset.value;
             }
 
+            function randomizeGroupCards() {
+                const groupGrid = document.getElementById("groupGrid");
+                if (!groupGrid) return;
+
+                const cards = Array.from(groupGrid.querySelectorAll(".group-card"));
+
+                // Standard Fisher-Yates shuffle using Math.random().
+                for (let i = cards.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [cards[i], cards[j]] = [cards[j], cards[i]];
+                }
+
+                cards.forEach(card => groupGrid.appendChild(card));
+            }
+
+            randomizeGroupCards();
+
             function startExperiment() {
                 metrics.participantId = document.getElementById("participantId").value.trim();
                 metrics.groupNumber = document.getElementById("groupNumber").value;
